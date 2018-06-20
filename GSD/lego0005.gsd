@@ -1,0 +1,156 @@
+;===============================================================================
+;  GSD-File for LEGO Mindstorms NXT
+;-------------------------------------------------------------------------------
+;  Manufacturer:
+;    Frederic Depuydt
+;    Gebroeders De Smetstraat 1, 9000 Gent
+;    België
+;    e-mail:frederic.depuydt@kuleuven.be
+;-------------------------------------------------------------------------------
+;  Author:
+;    Frederic Depuydt
+;-------------------------------------------------------------------------------
+;  Revision:
+;    [2017/07/07]  V2.0  Created the GSD File                               
+;===============================================================================
+
+#Profibus_DP
+
+GSD_Revision        = 3
+;------------------------ PRODUCT SPECIFICATIONS -------------------------------
+
+Vendor_Name         = "KU Leuven" 
+Model_Name          = "LEGO Mindstorms NXT"
+Revision            = "V2.0"
+Ident_Number        = 0x0005
+Hardware_Release    = "V2.0"
+Software_Release    = "V2.0"
+
+;------------------------ BITMAP IMAGES ----------------------------------------
+
+Bitmap_Device = "lego0005"          ; device bitmap - normal state
+;Bitmap_Diag = "PXC0DB4d"           ; device bitmap - diagnostic state
+;Bitmap_SF = "PXC0DB4n"             ; device bitmap - special (passive) state
+
+;------------------------ OVERALL PROFIBUS SPECIFICATIONS ----------------------
+
+Protocol_Ident      = 0
+Station_Type        = 0
+FMS_supp            = 0
+Slave_Family        = 3
+
+;------------------------ HARDWARE CONFIGURATION -------------------------------
+
+Implementation_Type = "LEGO Mindstorms NXT"
+Redundancy          = 0
+Repeater_Ctrl_Sig   = 2
+24V_Pins            = 0
+
+;------------------------ PROTOCOL CONFIGURATION -------------------------------
+
+Set_Slave_Add_supp  = 1
+Auto_Baud_supp      = 0
+Min_Slave_Intervall = 0
+Freeze_Mode_supp    = 0
+Sync_Mode_supp      = 1
+Fail_Safe           = 1
+
+;------------------------ SUPPORTED BAUDRATES ----------------------------------
+
+9.6_supp            = 1
+19.2_supp           = 1
+93.75_supp          = 1
+187.5_supp          = 1
+500_supp            = 1
+1.5M_supp           = 0
+3M_supp             = 0
+6M_supp             = 0
+12M_supp            = 0
+
+MaxTsdr_9.6         = 60
+MaxTsdr_19.2        = 60
+MaxTsdr_93.75       = 60
+MaxTsdr_187.5       = 60
+MaxTsdr_500         = 100
+MaxTsdr_1.5M        = 150
+MaxTsdr_3M          = 250
+MaxTsdr_6M          = 450
+MaxTsdr_12M         = 800
+
+;------------------------ DIAGNOSTIC DEFINITIONS -------------------------------
+
+Max_Diag_Data_Len   = 104
+
+Unit_Diag_Bit(0) = "Slot 0 Module Removed"
+Unit_Diag_Bit(1) = "Slot 1 Module Removed"
+
+;------------------------ PARAMETER Text DEFINITIONS---------------------
+
+
+;------------------------ PARAMETER DEFINITION ---------------------------------
+
+ExtUserPrmData = 1 "Byte Order"
+Bit(0) 1 0-1
+EndExtUserPrmData
+
+;------------------------ Ext MODULE PARAMETER DEFINITIONS ---------------------
+
+
+;------------------------ EXT_USER_PARAMETER DEFINITIONS -----------------------
+
+User_Prm_Data_Len = 5
+User_Prm_Data = 0x00,0x00,0x00,0x00,0x01
+
+Max_User_Prm_Data_Len = 64
+Ext_User_Prm_Data_Const(0) = 0x00,0x00,0x00,0x00,0x01
+Ext_User_Prm_Data_Ref(4) = 1
+
+
+;------------------------ Physical Interfaces ----------------------------------
+
+Physical_Interface 			= 0
+Transmission_Delay_9.6 	 	= 0
+Transmission_Delay_19.2  	= 0
+Transmission_Delay_31.25 	= 0
+Transmission_Delay_45.45 	= 0
+Transmission_Delay_93.75 	= 0
+Transmission_Delay_187.5 	= 0
+Transmission_Delay_500 	 	= 0
+Transmission_Delay_1.5M  	= 0
+Transmission_Delay_3M 	 	= 0
+Transmission_Delay_6M    	= 0
+Transmission_Delay_12M   	= 0
+Reaction_Delay_9.6  	 	= 0 
+Reaction_Delay_19.2 	 	= 0
+Reaction_Delay_31.25  		= 0 
+Reaction_Delay_45.45 	 	= 0 
+Reaction_Delay_93.75 	 	= 0 
+Reaction_Delay_187.5 	 	= 0 
+Reaction_Delay_500 	 		= 0 
+Reaction_Delay_1.5M 	 	= 0 
+Reaction_Delay_3M 	 		= 0 
+Reaction_Delay_6M 	 		= 0 
+Reaction_Delay_12M 	 		= 0 
+End_Physical_Interface
+
+
+
+;------------------------ MODULE DEFINITIONS -----------------------------------
+Modular_Station    = 1                  ; Modular Device
+Modul_Offset       = 1					; Module Offset
+Max_Module         = 64                  ; Max. No of Modules
+Max_Input_Len      = 128                 ; Max. Input Data Length
+Max_Output_Len     = 128                 ; Max. Output Data Length
+Max_Data_Len       = 128                 ; Max. Data Length I/O together
+
+Module =                "8 bit Input Module" 0x10
+1
+EndModule
+
+Module =                "8 bit Output Module" 0x20
+2
+EndModule
+
+Module =				"Empty Module" 0x00
+3
+EndModule
