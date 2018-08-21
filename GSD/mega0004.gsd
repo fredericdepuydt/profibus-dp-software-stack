@@ -162,7 +162,7 @@ EndExtUserPrmData
 User_Prm_Data_Len = 2
 User_Prm_Data = 0x05,0x00
 
-Max_User_Prm_Data_Len = 64
+Max_User_Prm_Data_Len = 128
 Ext_User_Prm_Data_Const(0) = 0x05,0x00
 Ext_User_Prm_Data_Ref(0) = 11
 Ext_User_Prm_Data_Ref(1) = 12
@@ -236,3 +236,4 @@ Ext_User_Prm_Data_Ref(1) = 9
 Ext_User_Prm_Data_Ref(2) = 10
 Info_Text = "Digital input module 8xDQ"
 EndModule
+
