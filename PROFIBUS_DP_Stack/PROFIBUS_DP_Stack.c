@@ -706,28 +706,45 @@ void DPV1_Write_request(const uint8_t *buf, const size_t size){
 	
 	TX_buf[7]=SSAP_DP_MS1;
 	TX_buf[8]=DSAP_DPV1_Read_Write_Res;
-	TX_buf[9]=0x5F;
-	TX_buf[10]=buf[0];
-	TX_buf[11]=buf[1];
+	//Standard error response
+	TX_buf[9]=0xDF;
+	TX_buf[10]=0x80;
+	TX_buf[11]=0xB2;
 	TX_buf[12]=0x00;
 		
 	if((buf[0]&0x80) == 0x00){
 		// Head Module Parameters || Virtual Parameters
 		if(buf[1]<number_Of_Parameters && buf[2] == 1 && size == 4){
 			PARAM[buf[1]]=buf[3];
-		}else{
-			// Error
-			TX_buf[9]=0xDF;
-			TX_buf[10]=0x80;
-			TX_buf[11]=0xB2;
+			TX_buf[9]=0x5F;
+			TX_buf[10]=buf[0];
+			TX_buf[11]=buf[1];
+		}else if(buf[1]==255 && buf[2] == 0x04){
+			if(buf[3] == 0x08 && buf[4] == 0x00 && buf[5] == 0xFD && buf[5] == 0xE8){ // Call Header only - I&M0 (65000) 
+				TX_buf[9]=0x5F;				
+				TX_buf[10]=buf[0];
+				TX_buf[11]=buf[1];
+				TX_buf[12] = 2;
+				TX_buf[13] = HW_VERSION_HIGH;
+				TX_buf[14] = HW_VERSION_LOW;
+			}
 		}
 	}else{
 		// Module Parameters
 		TX_buf[9]=0xDF;
 		TX_buf[10]=0x80;
 		TX_buf[11]=0xA9;
+		if(buf[1]==255 && buf[2] == 0x04){
+			if(buf[3] == 0x08 && buf[4] == 0x00 && buf[5] == 0xFD && buf[5] == 0xE8){ // Call Header only - I&M0 (65000)
+				TX_buf[9]=0x5F;				
+				TX_buf[10]=buf[0];
+				TX_buf[11]=buf[1];
+				TX_buf[12] = 2;
+				TX_buf[13] = HW_VERSION_HIGH;
+				TX_buf[14] = HW_VERSION_LOW;
+			}
+		}		
 	}
-		
 	createSD2(SA|0x80,ADDR|0x80,station|0x08,6);
 	RW_State = PROFIBUS_WRITESTART;
 }
