@@ -715,11 +715,13 @@ void DPV1_Write_request(const uint8_t *buf, const size_t size){
 	if((buf[0]&0x80) == 0x00){
 		// Head Module Parameters || Virtual Parameters
 		if(buf[1]<number_Of_Parameters && buf[2] == 1 && size == 4){
+			// Virtual Parameter
 			PARAM[buf[1]]=buf[3];
 			TX_buf[9]=0x5F;
 			TX_buf[10]=buf[0];
 			TX_buf[11]=buf[1];
 		}else if(buf[1]==255 && buf[2] == 0x04){
+			// Head parameter
 			if(buf[3] == 0x08 && buf[4] == 0x00 && buf[5] == 0xFD && buf[5] == 0xE8){ // Call Header only - I&M0 (65000) 
 				TX_buf[9]=0x5F;				
 				TX_buf[10]=buf[0];
@@ -736,12 +738,11 @@ void DPV1_Write_request(const uint8_t *buf, const size_t size){
 		TX_buf[11]=0xA9;
 		if(buf[1]==255 && buf[2] == 0x04){
 			if(buf[3] == 0x08 && buf[4] == 0x00 && buf[5] == 0xFD && buf[5] == 0xE8){ // Call Header only - I&M0 (65000)
-				TX_buf[9]=0x5F;				
+				TX_buf[9]=0x5F;
 				TX_buf[10]=buf[0];
 				TX_buf[11]=buf[1];
-				TX_buf[12] = 2;
-				TX_buf[13] = HW_VERSION_HIGH;
-				TX_buf[14] = HW_VERSION_LOW;
+				TX_buf[12] = 1;
+				TX_buf[13] = 0x00;
 			}
 		}		
 	}
