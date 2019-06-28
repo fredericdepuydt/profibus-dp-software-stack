@@ -223,6 +223,9 @@ uint32_t BUS_curr_time;
 uint32_t BUS_last_time;
 uint8_t BUS_active;
 
+uint32_t Shutdown_time;
+uint32_t Shutdown_threshold;
+
 uint16_t WD_threshold;
 uint32_t WD_curr_time;
 uint32_t WD_last_time;

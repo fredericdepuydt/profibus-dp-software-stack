@@ -56,8 +56,9 @@ void PROFIBUS_begin()
 	
 	Data_Exch_Packet = 0;
 	
-	BUS_threshold = 10000;
-	
+	BUS_threshold = 10*1000; // After 10 sec of no Packets -> No BUS communication
+	Shutdown_threshold = 5*60*1000; // After 5 min of No BUS communication
+            
 	RW_State = PROFIBUS_READSTART;
 	S_State = PROFIBUS_SS_Power_ON;
 	MS_State = PROFIBUS_MS_CLEAR;
@@ -130,9 +131,15 @@ void PROFIBUS_S_State(){
 				DIAG_configuration_fault = 1;
 				FailSafe();
 				S_State = PROFIBUS_SS_Power_ON;
+                Shutdown_time = 0;
 				BUS_active = 0;
-		}
-	}
+            }
+	}else{
+        Shutdown_time++;
+        if(Shutdown_time > Shutdown_threshold){
+            nxt_avr_power_down();
+        }
+    }
 	
 	switch(S_State){
 		case PROFIBUS_SS_Data_XCHG:
@@ -184,7 +191,7 @@ void PROFIBUS_S_State(){
 			if(!DIAG_configuration_fault){
 				S_State = PROFIBUS_SS_Pre_Data_XCHG;
 			}
-			break;
+			break;    
 		default:
 			S_State = PROFIBUS_SS_Power_ON;
 			break;
